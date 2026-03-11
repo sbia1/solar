@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>talyvn — Orbit Ring Logo Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --font-display: 'Plus Jakarta Sans', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --radius-lg: 24px; --radius-md: 16px; --radius-sm: 10px;
+    --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  [data-theme="dark"] {
+    --bg-primary: #060810; --bg-secondary: #0c0e16;
+    --bg-card: rgba(255,255,255,0.025); --bg-card-hover: rgba(255,255,255,0.05);
+    --border-subtle: rgba(255,255,255,0.06); --border-hover: rgba(255,255,255,0.12);
+    --text-primary: #e0e8f0; --text-secondary: rgba(224,232,240,0.6); --text-tertiary: rgba(224,232,240,0.35);
+    --accent-mint: #10E4A8; --accent-purple: #8040F0; --accent-teal: #009C84;
+    --glow-mint: rgba(16,228,168,0.10); --glow-purple: rgba(128,64,240,0.10);
+    --logo-showcase-bg: #030508;
+    --toggle-bg: rgba(255,255,255,0.08); --toggle-knob: #e0e8f0;
+    --swatch-border: rgba(255,255,255,0.12);
+  }
+  [data-theme="light"] {
+    --bg-primary: #f6f8fb; --bg-secondary: #ffffff;
+    --bg-card: rgba(0,0,0,0.025); --bg-card-hover: rgba(0,0,0,0.04);
+    --border-subtle: rgba(0,0,0,0.07); --border-hover: rgba(0,0,0,0.13);
+    --text-primary: #141824; --text-secondary: rgba(20,24,36,0.58); --text-tertiary: rgba(20,24,36,0.35);
+    --accent-mint: #0bb88a; --accent-purple: #6a30d4; --accent-teal: #008870;
+    --glow-mint: rgba(11,184,138,0.08); --glow-purple: rgba(106,48,212,0.08);
+    --logo-showcase-bg: #eef0f5;
+    --toggle-bg: rgba(0,0,0,0.07); --toggle-knob: #141824;
+    --swatch-border: rgba(0,0,0,0.10);
+  }
+
+  body { background: var(--bg-primary); font-family: var(--font-body); color: var(--text-primary); min-height: 100vh; overflow-x: hidden; transition: background var(--transition), color var(--transition); line-height: 1.6; }
+  .container { max-width: 1060px; margin: 0 auto; padding: 48px 28px 100px; }
+
+  /* Toggle */
+  .theme-toggle { position: fixed; top: 24px; right: 24px; z-index: 100; display: flex; align-items: center; gap: 10px; background: var(--bg-card); border: 1px solid var(--border-subtle); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-radius: 100px; padding: 6px 16px 6px 12px; cursor: pointer; transition: all var(--transition); user-select: none; }
+  .theme-toggle:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+  .toggle-track { width: 40px; height: 22px; background: var(--toggle-bg); border-radius: 100px; position: relative; transition: background var(--transition); }
+  .toggle-knob { width: 16px; height: 16px; background: var(--toggle-knob); border-radius: 50%; position: absolute; top: 3px; left: 3px; transition: transform var(--transition), background var(--transition); }
+  [data-theme="light"] .toggle-knob { transform: translateX(18px); }
+  .toggle-label { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-tertiary); transition: color var(--transition); }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 64px; padding-top: 32px; animation: fadeUp 0.8s ease-out both; }
+  .badge { display: inline-block; font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--accent-mint); border: 1px solid var(--border-subtle); border-radius: 100px; padding: 8px 24px; margin-bottom: 28px; background: var(--bg-card); }
+  .header h1 { font-family: var(--font-display); font-size: clamp(42px,6.5vw,72px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.05; color: var(--text-primary); margin-bottom: 20px; transition: color var(--transition); }
+  .header .subtitle { font-size: 17px; color: var(--text-secondary); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+
+  /* Sections */
+  .section { margin-bottom: 72px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .section-number { font-family: var(--font-display); font-size: 12px; font-weight: 600; color: var(--accent-mint); background: var(--glow-mint); border-radius: 8px; padding: 4px 10px; letter-spacing: 1px; }
+  .section h2 { font-family: var(--font-display); font-size: 24px; font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); transition: color var(--transition); }
+  .section-desc { font-size: 15px; color: var(--text-secondary); line-height: 1.75; margin-bottom: 32px; max-width: 640px; transition: color var(--transition); }
+  .divider { width: 48px; height: 2px; background: linear-gradient(90deg, var(--accent-mint), var(--accent-purple)); border-radius: 2px; margin: 0 auto 64px; opacity: 0.5; }
+
+  /* Logo Hero Card */
+  .logo-hero { border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border-subtle); background: var(--bg-card); transition: all var(--transition); }
+  .logo-hero:hover { border-color: var(--border-hover); }
+  .logo-hero-showcase { background: var(--logo-showcase-bg); padding: 56px 32px; display: flex; align-items: center; justify-content: center; position: relative; transition: background var(--transition); }
+  .logo-hero-showcase svg, .logo-hero-showcase img { width: 240px; height: 240px; position: relative; z-index: 1; }
+  .logo-hero-showcase::after { content: ''; position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(16,228,168,0.06), rgba(128,64,240,0.04), transparent 70%); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .logo-hero-info { padding: 32px; }
+  .logo-hero-info h3 { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; transition: color var(--transition); }
+  .logo-hero-info p { font-size: 14px; color: var(--text-secondary); line-height: 1.7; max-width: 520px; transition: color var(--transition); }
+  .use-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .use-tag { font-family: var(--font-display); font-size: 10px; font-weight: 500; letter-spacing: 0.8px; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border-subtle); color: var(--text-tertiary); transition: all var(--transition); }
+
+  /* Palette */
+  .swatches { display: flex; gap: 12px; flex-wrap: wrap; }
+  .swatch-item { display: flex; align-items: center; gap: 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 10px 16px 10px 10px; background: var(--bg-card); transition: all var(--transition); cursor: pointer; position: relative; }
+  .swatch-item:hover { border-color: var(--border-hover); background: var(--bg-card-hover); }
+  .swatch-color { width: 36px; height: 36px; border-radius: 8px; border: 1px solid var(--swatch-border); flex-shrink: 0; }
+  .swatch-meta { display: flex; flex-direction: column; gap: 1px; }
+  .swatch-name { font-family: var(--font-display); font-size: 12px; font-weight: 600; color: var(--text-primary); transition: color var(--transition); }
+  .swatch-hex { font-family: 'SFMono-Regular','Consolas',monospace; font-size: 11px; color: var(--text-tertiary); transition: color var(--transition); }
+  .copied-toast { position: absolute; top: -28px; left: 50%; transform: translateX(-50%); font-family: var(--font-display); font-size: 10px; font-weight: 600; color: var(--accent-mint); background: var(--bg-secondary); border: 1px solid var(--border-subtle); padding: 3px 10px; border-radius: 6px; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; white-space: nowrap; }
+  .copied-toast.show { opacity: 1; }
+
+  /* Showcase Grid */
+  .showcase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  @media (max-width: 700px) { .showcase-grid { grid-template-columns: 1fr; } }
+  .showcase-item { border: 1px solid var(--border-subtle); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg-card); transition: all var(--transition); }
+  .showcase-item:hover { border-color: var(--border-hover); }
+  .showcase-item.full-width { grid-column: 1 / -1; }
+  .showcase-body { padding: 0; }
+  .showcase-footer { padding: 16px 24px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: space-between; transition: border-color var(--transition); }
+  .showcase-footer .sf-label { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-tertiary); transition: color var(--transition); }
+  .showcase-footer .sf-context { font-size: 12px; color: var(--text-tertiary); transition: color var(--transition); }
+  .variant-tag { font-family: var(--font-display); font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 8px; border-radius: 5px; background: var(--glow-mint); color: var(--accent-mint); }
+
+  /* Navbar */
+  .navbar-mock { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: var(--bg-secondary); transition: background var(--transition); }
+  .navbar-brand { display: flex; align-items: center; gap: 10px; }
+  .navbar-brand img { width: 28px; height: 28px; object-fit: contain; }
+  .navbar-brand span { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text-primary); transition: color var(--transition); }
+  .navbar-links { display: flex; gap: 20px; }
+  .navbar-links span { font-size: 13px; color: var(--text-tertiary); transition: color var(--transition); }
+  .navbar-links span:first-child { color: var(--text-primary); }
+  .navbar-cta { font-family: var(--font-display); font-size: 12px; font-weight: 600; padding: 7px 16px; border-radius: 8px; border: none; background: var(--accent-mint); color: #060810; cursor: default; }
+  .navbar-page { padding: 32px 24px 40px; }
+  .navbar-page-hero { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; transition: color var(--transition); }
+  .navbar-page-sub { font-size: 13px; color: var(--text-tertiary); max-width: 360px; line-height: 1.6; transition: color var(--transition); }
+
+  /* Browser Tab */
+  .browser-tab-mock { display: flex; flex-direction: column; align-items: stretch; background: var(--bg-card); transition: all var(--transition); }
+  .browser-tab-bar { display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: var(--bg-secondary); border-bottom: 1px solid var(--border-subtle); transition: all var(--transition); }
+  .tab-dots { display: flex; gap: 5px; }
+  .tab-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .tab-dot:nth-child(1) { background: #ef4444; } .tab-dot:nth-child(2) { background: #eab308; } .tab-dot:nth-child(3) { background: #22c55e; }
+  .browser-tab { display: flex; align-items: center; gap: 7px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 5px 14px 5px 8px; margin-left: 8px; transition: all var(--transition); }
+  .browser-tab .tab-favicon { width: 16px; height: 16px; border-radius: 3px; flex-shrink: 0; }
+  .browser-tab .tab-favicon img { width: 100%; height: 100%; object-fit: contain; }
+  .browser-tab .tab-title { font-family: var(--font-body); font-size: 12px; color: var(--text-secondary); white-space: nowrap; transition: color var(--transition); }
+  .browser-address-bar { display: flex; align-items: center; gap: 8px; margin: 10px 14px; background: var(--bg-card-hover); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 7px 12px; transition: all var(--transition); }
+  .address-lock { font-size: 11px; opacity: 0.4; }
+  .address-url { font-family: 'SFMono-Regular','Consolas',monospace; font-size: 11px; color: var(--text-tertiary); transition: color var(--transition); }
+  .browser-body { height: 60px; }
+
+  /* Mobile */
+  .mobile-mock { width: 200px; margin: 24px auto; border: 1px solid var(--border-subtle); border-radius: 28px; overflow: hidden; background: var(--bg-secondary); box-shadow: 0 8px 32px rgba(0,0,0,0.15); transition: all var(--transition); }
+  .mobile-status-bar { display: flex; justify-content: space-between; align-items: center; padding: 8px 16px 4px; font-size: 10px; font-weight: 600; color: var(--text-tertiary); }
+  .mobile-home-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 16px 14px 20px; justify-items: center; }
+  .mobile-app-slot { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .mobile-app-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .mobile-app-icon img { width: 100%; height: 100%; object-fit: contain; }
+  .mobile-app-icon.orbit-icon { background: #ffffff; }
+  .mobile-app-icon.placeholder-icon { background: var(--border-subtle); }
+  .mobile-app-name { font-size: 8px; color: var(--text-tertiary); font-weight: 500; }
+  .mobile-dock { display: flex; justify-content: center; gap: 20px; padding: 10px 14px 16px; background: var(--bg-card); border-top: 1px solid var(--border-subtle); }
+  .dock-icon { width: 36px; height: 36px; border-radius: 9px; background: var(--border-subtle); }
+
+  /* Slack */
+  .slack-sidebar { display: flex; align-items: center; gap: 10px; padding: 14px 20px; background: #0e1118; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  [data-theme="light"] .slack-sidebar { background: #eef0f4; border-bottom-color: rgba(0,0,0,0.06); }
+  .slack-ws-icon { width: 28px; height: 28px; border-radius: 7px; background: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .slack-ws-icon img { width: 100%; height: 100%; object-fit: contain; }
+  .slack-ws-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text-primary); }
+  .slack-channels { padding: 12px 20px; display: flex; flex-direction: column; gap: 6px; }
+  .slack-ch { font-size: 13px; color: var(--text-tertiary); font-weight: 500; }
+  .slack-ch.active { color: var(--text-primary); font-weight: 600; }
+  .slack-ch::before { content: '# '; opacity: 0.4; }
+  .slack-msg-area { padding: 14px 20px; border-top: 1px solid var(--border-subtle); display: flex; align-items: center; gap: 10px; }
+  .slack-avatar { width: 28px; height: 28px; border-radius: 6px; background: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+  .slack-avatar img { width: 100%; height: 100%; object-fit: contain; }
+  .slack-msg-author { font-size: 12px; font-weight: 700; color: var(--text-primary); }
+  .slack-msg-author span { font-weight: 400; color: var(--text-tertiary); margin-left: 6px; font-size: 10px; }
+  .slack-msg-text { font-size: 13px; color: var(--text-secondary); }
+
+  /* Email Sig */
+  .email-sig-mock { padding: 24px; }
+  .email-sig-body { font-size: 13px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 20px; }
+  .email-sig-divider { width: 100%; height: 1px; background: var(--border-subtle); margin-bottom: 16px; }
+  .email-sig { display: flex; align-items: center; gap: 14px; }
+  .email-sig-icon { width: 44px; height: 44px; border-radius: 10px; background: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+  .email-sig-icon img { width: 100%; height: 100%; object-fit: contain; }
+  .email-sig-name { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--text-primary); }
+  .email-sig-role { font-size: 12px; color: var(--text-tertiary); }
+  .email-sig-url { font-size: 11px; color: var(--accent-mint); text-decoration: none; }
+
+  /* Social */
+  .social-mock { padding: 24px; display: flex; flex-direction: column; align-items: center; gap: 16px; }
+  .social-avatar-row { display: flex; gap: 16px; align-items: center; }
+  .social-avatar { border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #ffffff; }
+  .social-avatar.lg { width: 72px; height: 72px; }
+  .social-avatar.md { width: 48px; height: 48px; }
+  .social-avatar.sm { width: 32px; height: 32px; }
+  .social-avatar img { width: 80%; height: 80%; object-fit: contain; }
+  .social-handle { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--text-primary); }
+  .social-handle span { color: var(--text-tertiary); font-weight: 400; }
+
+  /* Splash */
+  .splash-mock { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 48px 24px; background: #030508; position: relative; overflow: hidden; min-height: 240px; }
+  [data-theme="light"] .splash-mock { background: #eef0f5; }
+  .splash-mock::before { content: ''; position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(16,228,168,0.08), transparent 70%); top: 30%; left: 50%; transform: translate(-50%, -50%); }
+  .splash-logo { width: 80px; height: 80px; object-fit: contain; position: relative; z-index: 1; }
+  .splash-wordmark { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-top: 14px; position: relative; z-index: 1; letter-spacing: -0.5px; }
+  .splash-loader { width: 40px; height: 3px; border-radius: 3px; background: var(--border-subtle); margin-top: 20px; position: relative; z-index: 1; overflow: hidden; }
+  .splash-loader::after { content: ''; position: absolute; width: 50%; height: 100%; background: var(--accent-mint); border-radius: 3px; animation: loaderSlide 1.5s ease-in-out infinite; }
+
+  /* Notifications */
+  .notif-mock { padding: 24px; display: flex; flex-direction: column; gap: 12px; }
+  .notif-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px; border-radius: 12px; background: var(--bg-card-hover); border: 1px solid var(--border-subtle); }
+  .notif-icon { width: 36px; height: 36px; border-radius: 9px; background: #ffffff; display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; position: relative; }
+  .notif-icon img { width: 100%; height: 100%; object-fit: contain; }
+  .notif-badge { position: absolute; top: -3px; right: -3px; width: 14px; height: 14px; border-radius: 50%; background: #ef4444; border: 2px solid var(--bg-primary); display: flex; align-items: center; justify-content: center; font-size: 7px; font-weight: 700; color: #fff; }
+  .notif-title { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+  .notif-text { font-size: 12px; color: var(--text-tertiary); }
+  .notif-time { font-size: 10px; color: var(--text-tertiary); margin-top: 2px; }
+
+  /* Login */
+  .login-mock { padding: 40px 32px; display: flex; flex-direction: column; align-items: center; }
+  .login-logo { width: 56px; height: 56px; object-fit: contain; margin-bottom: 14px; }
+  .login-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 4px; }
+  .login-sub { font-size: 13px; color: var(--text-tertiary); margin-bottom: 24px; }
+  .login-field { width: 100%; max-width: 260px; padding: 9px 14px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-card); color: var(--text-tertiary); font-size: 13px; font-family: var(--font-body); margin-bottom: 10px; outline: none; transition: all var(--transition); }
+  .login-btn { width: 100%; max-width: 260px; padding: 10px; border-radius: 8px; border: none; background: linear-gradient(135deg, #10E4A8, #8040F0); color: #fff; font-family: var(--font-display); font-size: 13px; font-weight: 600; cursor: default; margin-top: 4px; }
+
+  /* Desktop Tracker App */
+  .tracker-mock { background: var(--bg-secondary); border-radius: 12px; margin: 20px; overflow: hidden; border: 1px solid var(--border-subtle); transition: all var(--transition); }
+  .tracker-titlebar { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; background: var(--bg-card); border-bottom: 1px solid var(--border-subtle); }
+  .tracker-titlebar .t-dots { display: flex; gap: 5px; }
+  .tracker-titlebar .t-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .tracker-titlebar .t-dot:nth-child(1) { background: #ef4444; } .tracker-titlebar .t-dot:nth-child(2) { background: #eab308; } .tracker-titlebar .t-dot:nth-child(3) { background: #22c55e; }
+  .tracker-titlebar .t-name { font-family: var(--font-display); font-size: 12px; font-weight: 600; color: var(--text-tertiary); }
+  .tracker-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 12px; }
+  .tracker-brand { display: flex; align-items: center; gap: 8px; }
+  .tracker-brand img { width: 24px; height: 24px; object-fit: contain; }
+  .tracker-brand span { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--text-primary); }
+  .tracker-icons { display: flex; gap: 10px; align-items: center; }
+  .tracker-icon-circle { width: 30px; height: 30px; border-radius: 50%; background: var(--bg-card); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--text-tertiary); }
+  .tracker-icon-avatar { width: 30px; height: 30px; border-radius: 50%; background: var(--accent-purple); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #fff; font-family: var(--font-display); }
+  .tracker-active { padding: 0 20px 16px; }
+  .tracker-active-label { font-size: 11px; color: var(--text-tertiary); margin-bottom: 4px; }
+  .tracker-active-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .tracker-task-info { display: flex; flex-direction: column; gap: 4px; }
+  .tracker-task-name { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--text-primary); }
+  .tracker-task-project { display: flex; align-items: center; gap: 6px; }
+  .tracker-project-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-mint); }
+  .tracker-project-name { font-size: 12px; color: var(--accent-mint); font-weight: 500; }
+  .tracker-project-badge { width: 18px; height: 18px; border-radius: 50%; background: var(--accent-purple); display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: #fff; }
+  .tracker-timer-box { display: flex; align-items: center; gap: 12px; background: linear-gradient(135deg, rgba(16,228,168,0.08), rgba(128,64,240,0.08)); border-radius: 14px; padding: 14px 18px; }
+  .tracker-time { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: var(--text-primary); letter-spacing: -1px; }
+  .tracker-total { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
+  .tracker-pause-btn { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: default; position: relative; overflow: visible; }
+  .tracker-pause-btn img { width: 44px; height: 44px; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
+  .tracker-pause-icon { position: relative; z-index: 2; display: flex; gap: 3px; }
+  .tracker-pause-icon span { width: 4px; height: 16px; border-radius: 2px; background: #fff; display: block; }
+  .tracker-tabs { display: flex; border-bottom: 1px solid var(--border-subtle); }
+  .tracker-tab { flex: 1; text-align: center; padding: 10px; font-family: var(--font-display); font-size: 13px; font-weight: 600; color: var(--text-tertiary); border-bottom: 2px solid transparent; transition: all var(--transition); }
+  .tracker-tab.active { color: var(--text-primary); border-bottom-color: var(--accent-mint); }
+  .tracker-search-row { display: flex; gap: 10px; padding: 14px 20px; align-items: center; }
+  .tracker-search { flex: 1; padding: 8px 12px; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-card); font-size: 12px; color: var(--text-tertiary); font-family: var(--font-body); outline: none; }
+  .tracker-add-btn { font-family: var(--font-display); font-size: 12px; font-weight: 600; padding: 8px 16px; border-radius: 8px; border: none; background: var(--accent-purple); color: #fff; cursor: default; white-space: nowrap; }
+  .tracker-task-list { padding: 0 20px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .tracker-task-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border-subtle); background: var(--bg-card); }
+  .tracker-task-item-left { display: flex; flex-direction: column; gap: 3px; }
+  .tracker-task-item-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+  .tracker-task-item-right { display: flex; align-items: center; gap: 8px; }
+  .tracker-task-item-time { font-family: var(--font-display); font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 6px; }
+  .tracker-task-item-time.running { background: rgba(239,68,68,0.12); color: #ef4444; }
+  .tracker-task-item-time.stopped { color: var(--text-tertiary); }
+  .tracker-task-play { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+  .tracker-footer { display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; border-top: 1px solid var(--border-subtle); }
+  .tracker-footer-ver { font-size: 10px; color: var(--text-tertiary); }
+  .tracker-footer-link { font-size: 12px; color: var(--accent-mint); font-weight: 600; text-decoration: none; }
+
+  /* Footer */
+  .footer { text-align: center; padding-top: 48px; border-top: 1px solid var(--border-subtle); }
+  .footer p { font-size: 13px; color: var(--text-tertiary); }
+  .footer .brand-mark { font-family: var(--font-display); font-weight: 700; background: linear-gradient(135deg, var(--accent-mint), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes loaderSlide { 0% { left: -50%; } 100% { left: 100%; } }
+  .anim { animation: fadeUp 0.7s ease-out both; }
+  .anim-d1 { animation-delay: 0.1s; } .anim-d2 { animation-delay: 0.2s; } .anim-d3 { animation-delay: 0.3s; }
+  .anim-d4 { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<div class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+  <div class="toggle-track"><div class="toggle-knob"></div></div>
+  <span class="toggle-label" id="themeLabel">Dark</span>
+</div>
+
+<div class="container">
+
+  <div class="header anim">
+    <div class="badge">Logo Showcase</div>
+    <h1>talyvn</h1>
+    <p class="subtitle">The Orbit Ring mark — animated concentric orbits with mint, purple, and teal gradients revolving around a pulsing hexagonal core. A single SVG that scales infinitely and stays alive at any size.</p>
+  </div>
+  <div class="divider anim anim-d1"></div>
+
+  <!-- 01 · The Mark -->
+  <div class="section anim anim-d2">
+    <div class="section-header"><span class="section-number">01</span><h2>The Mark</h2></div>
+    <p class="section-desc">A fully animated SVG logo with three orbital rings, gradient arcs, tick marks, glowing nodes, and a breathing core. Ships as a single lightweight file — no raster dependencies.</p>
+    <div class="logo-hero">
+      <div class="logo-hero-showcase">
+        <img src="orbit-ring-svg.svg" alt="talyvn Orbit Ring Logo">
+      </div>
+      <div class="logo-hero-info">
+        <h3>Orbit Ring · SVG</h3>
+        <p>Three concentric orbital rings rotate at different speeds and directions. Gradient arcs fade naturally, glowing nodes pulse on each ring, and the hexagonal core breathes with a soft mint glow. Fully vector — no pixels, no sprites, infinite resolution.</p>
+        <div class="use-tags">
+          <span class="use-tag">Websites</span><span class="use-tag">App Icons</span><span class="use-tag">Loading States</span>
+          <span class="use-tag">Hero Sections</span><span class="use-tag">Favicons</span><span class="use-tag">Dark UI</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 · Color Palette -->
+  <div class="section anim anim-d3">
+    <div class="section-header"><span class="section-number">02</span><h2>Color Palette</h2></div>
+    <p class="section-desc">The orbit ring uses three gradient families. Click any swatch to copy its hex value.</p>
+    <div class="swatches">
+      <div class="swatch-item" onclick="copyHex(this,'#10E4A8')"><div class="swatch-color" style="background:#10E4A8;"></div><div class="swatch-meta"><span class="swatch-name">Mint</span><span class="swatch-hex">#10E4A8</span></div><span class="copied-toast">Copied!</span></div>
+      <div class="swatch-item" onclick="copyHex(this,'#30F0BC')"><div class="swatch-color" style="background:#30F0BC;"></div><div class="swatch-meta"><span class="swatch-name">Mint Light</span><span class="swatch-hex">#30F0BC</span></div><span class="copied-toast">Copied!</span></div>
+      <div class="swatch-item" onclick="copyHex(this,'#8040F0')"><div class="swatch-color" style="background:#8040F0;"></div><div class="swatch-meta"><span class="swatch-name">Purple</span><span class="swatch-hex">#8040F0</span></div><span class="copied-toast">Copied!</span></div>
+      <div class="swatch-item" onclick="copyHex(this,'#9860F8')"><div class="swatch-color" style="background:#9860F8;"></div><div class="swatch-meta"><span class="swatch-name">Purple Light</span><span class="swatch-hex">#9860F8</span></div><span class="copied-toast">Copied!</span></div>
+      <div class="swatch-item" onclick="copyHex(this,'#009C84')"><div class="swatch-color" style="background:#009C84;"></div><div class="swatch-meta"><span class="swatch-name">Teal</span><span class="swatch-hex">#009C84</span></div><span class="copied-toast">Copied!</span></div>
+      <div class="swatch-item" onclick="copyHex(this,'#00C4A4')"><div class="swatch-color" style="background:#00C4A4;"></div><div class="swatch-meta"><span class="swatch-name">Teal Light</span><span class="swatch-hex">#00C4A4</span></div><span class="copied-toast">Copied!</span></div>
+    </div>
+  </div>
+
+  <!-- 03 · In Context -->
+  <div class="section anim anim-d4">
+    <div class="section-header"><span class="section-number">03</span><h2>In Context</h2></div>
+    <p class="section-desc">Real-world mockups showing how the orbit ring mark works across platforms and placements.</p>
+
+    <div class="showcase-grid">
+
+      <!-- Website Navbar -->
+      <div class="showcase-item full-width">
+        <div class="showcase-body">
+          <div class="navbar-mock">
+            <div class="navbar-brand"><img src="orbit-ring-svg.svg" alt="talyvn"><span>talyvn</span></div>
+            <div class="navbar-links"><span>Dashboard</span><span>Teams</span><span>Reports</span><span>Settings</span></div>
+            <button class="navbar-cta">Start Free Trial</button>
+          </div>
+          <div class="navbar-page">
+            <div class="navbar-page-hero">Track time. Manage teams. Scale fast.</div>
+            <div class="navbar-page-sub">Real-time workforce visibility with smart time tracking, activity monitoring, and payroll-ready reports.</div>
+          </div>
+        </div>
+        <div class="showcase-footer"><span class="sf-label">Website Navbar</span><span class="variant-tag">SVG</span></div>
+      </div>
+
+      <!-- Browser Favicon -->
+      <div class="showcase-item">
+        <div class="showcase-body">
+          <div class="browser-tab-mock">
+            <div class="browser-tab-bar">
+              <div class="tab-dots"><div class="tab-dot"></div><div class="tab-dot"></div><div class="tab-dot"></div></div>
+              <div class="browser-tab"><div class="tab-favicon"><img src="orbit-ring-svg.svg" alt="favicon"></div><span class="tab-title">talyvn — Dashboard</span></div>
+            </div>
+            <div class="browser-address-bar"><span class="address-lock">🔒</span><span class="address-url">app.talyvn.com</span></div>
+            <div class="browser-body"></div>
+          </div>
+        </div>
+        <div class="showcase-footer"><span class="sf-label">Browser Favicon</span><span class="variant-tag">SVG</span></div>
+      </div>
+
+      <!-- Mobile App Icon -->
+      <div class="showcase-item">
+        <div class="showcase-body">
+          <div class="mobile-mock">
+            <div class="mobile-status-bar"><span>9:41</span><span>●●●</span></div>
+            <div class="mobile-home-grid">
+              <div class="mobile-app-slot"><div class="mobile-app-icon placeholder-icon"></div><span class="mobile-app-name">Photos</span></div>
+              <div class="mobile-app-slot"><div class="mobile-app-icon placeholder-icon"></div><span class="mobile-app-name">Mail</span></div>
+              <div class="mobile-app-slot"><div class="mobile-app-icon orbit-icon"><img src="orbit-ring-svg.svg" alt="talyvn"></div><span class="mobile-app-name">talyvn</span></div>
+              <div class="mobile-app-slot"><div class="mobile-app-icon placeholder-icon"></div><span class="mobile-app-name">Notes</span></div>
+              <div class="mobile-app-slot"><div class="mobile-app-icon placeholder-icon"></div><span class="mobile-app-name">Music</span></div>
+              <div class="mobile-app-slot"><div class="mobile-app-icon placeholder-icon"></div><span class="mobile-app-name">Maps</span></div>
+              <div class="mobile-app-slot"><div class="mobile-app-icon placeholder-icon"></div><span class="mobile-app-name">Files</span></div>
+              <div class="mobile-app-slot"><div class="mobile-app-icon placeholder-icon"></div><span class="mobile-app-name">Clock</span></div>
+            </div>
+            <div class="mobile-dock"><div class="dock-icon"></div><div class="dock-icon"></div><div class="dock-icon"></div><div class="dock-icon"></div></div>
+          </div>
+        </div>
+        <div class="showcase-footer"><span class="sf-label">App Icon · iOS</span><span class="variant-tag">SVG</span></div>
+      </div>
+
+      <!-- Slack -->
+      <div class="showcase-item">
+        <div class="showcase-body">
+          <div class="slack-sidebar"><div class="slack-ws-icon"><img src="orbit-ring-svg.svg" alt="talyvn"></div><span class="slack-ws-name">talyvn</span></div>
+          <div class="slack-channels"><div class="slack-ch active">general</div><div class="slack-ch">engineering</div><div class="slack-ch">support-alerts</div></div>
+          <div class="slack-msg-area"><div class="slack-avatar"><img src="orbit-ring-svg.svg" alt="bot"></div><div style="display:flex;flex-direction:column;gap:2px;"><div class="slack-msg-author">talyvn bot <span>11:32 AM</span></div><div class="slack-msg-text">New team member clocked in.</div></div></div>
+        </div>
+        <div class="showcase-footer"><span class="sf-label">Slack Workspace</span><span class="variant-tag">SVG</span></div>
+      </div>
+
+      <!-- Email Signature -->
+      <div class="showcase-item">
+        <div class="showcase-body email-sig-mock">
+          <div class="email-sig-body">Thanks for getting back to me on the onboarding flow. I've attached the updated timeline.</div>
+          <div class="email-sig-divider"></div>
+          <div class="email-sig"><div class="email-sig-icon"><img src="orbit-ring-svg.svg" alt="talyvn"></div><div style="display:flex;flex-direction:column;gap:2px;"><span class="email-sig-name">Alex Rivera</span><span class="email-sig-role">Customer Success · talyvn</span><a class="email-sig-url" href="#">talyvn.com</a></div></div>
+        </div>
+        <div class="showcase-footer"><span class="sf-label">Email Signature</span><span class="variant-tag">SVG</span></div>
+      </div>
+
+      <!-- Social Avatars -->
+      <div class="showcase-item">
+        <div class="showcase-body social-mock">
+          <div class="social-avatar-row">
+            <div class="social-avatar lg"><img src="orbit-ring-svg.svg" alt="talyvn"></div>
+            <div class="social-avatar md"><img src="orbit-ring-svg.svg" alt="talyvn"></div>
+            <div class="social-avatar sm"><img src="orbit-ring-svg.svg" alt="talyvn"></div>
+          </div>
+          <div class="social-handle">@talyvn <span>· Workforce Management</span></div>
+        </div>
+        <div class="showcase-footer"><span class="sf-label">Social Avatars</span><span class="variant-tag">SVG</span></div>
+      </div>
+
+      <!-- Splash Screen -->
+      <div class="showcase-item">
+        <div class="showcase-body splash-mock">
+          <img class="splash-logo" src="orbit-ring-svg.svg" alt="talyvn">
+          <div class="splash-wordmark">talyvn</div>
+          <div class="splash-loader"></div>
+        </div>
+        <div class="showcase-footer"><span class="sf-label">Splash Screen</span><span class="variant-tag">SVG</span></div>
+      </div>
+
+      <!-- Notifications -->
+      <div class="showcase-item">
+        <div class="showcase-body notif-mock">
+          <div class="notif-item"><div class="notif-icon"><img src="orbit-ring-svg.svg" alt="talyvn"><div class="notif-badge">3</div></div><div style="display:flex;flex-direction:column;gap:2px;"><div class="notif-title">talyvn</div><div class="notif-text">Weekly team report is ready.</div><div class="notif-time">2 min ago</div></div></div>
+          <div class="notif-item"><div class="notif-icon"><img src="orbit-ring-svg.svg" alt="talyvn"></div><div style="display:flex;flex-direction:column;gap:2px;"><div class="notif-title">talyvn</div><div class="notif-text">Marcus D. started a break.</div><div class="notif-time">18 min ago</div></div></div>
+        </div>
+        <div class="showcase-footer"><span class="sf-label">Notifications</span><span class="variant-tag">SVG</span></div>
+      </div>
+
+      <!-- Desktop Tracker App -->
+      <div class="showcase-item full-width">
+        <div class="showcase-body">
+          <div class="tracker-mock">
+            <!-- Title bar -->
+            <div class="tracker-titlebar">
+              <div class="t-dots"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div>
+              <div class="t-name">talyvn</div>
+              <div style="width:42px;"></div>
+            </div>
+            <!-- Header -->
+            <div class="tracker-header">
+              <div class="tracker-brand">
+                <img src="orbit-ring-svg.svg" alt="talyvn">
+                <span>talyvn</span>
+              </div>
+              <div class="tracker-icons">
+                <div class="tracker-icon-circle">💬</div>
+                <div class="tracker-icon-circle">⚙</div>
+                <div class="tracker-icon-avatar">S</div>
+              </div>
+            </div>
+            <!-- Active task -->
+            <div class="tracker-active">
+              <div class="tracker-active-label">Active task</div>
+              <div class="tracker-active-row">
+                <div class="tracker-task-info">
+                  <div class="tracker-task-name">ai</div>
+                  <div class="tracker-task-project">
+                    <div class="tracker-project-dot"></div>
+                    <span class="tracker-project-name">BSW – BitSpinWin</span>
+                    <div class="tracker-project-badge">T</div>
+                  </div>
+                </div>
+                <div class="tracker-timer-box">
+                  <div>
+                    <div class="tracker-time">02:53:35</div>
+                    <div class="tracker-total">Total: 2h 53m</div>
+                  </div>
+                  <div class="tracker-pause-btn">
+                    <img src="orbit-ring-svg.svg" alt="orbit ring">
+                    <div class="tracker-pause-icon"><span></span><span></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Tabs -->
+            <div class="tracker-tabs">
+              <div class="tracker-tab active">Recent Tasks</div>
+              <div class="tracker-tab">Projects</div>
+            </div>
+            <!-- Search -->
+            <div class="tracker-search-row">
+              <input class="tracker-search" type="text" value="Search by task" readonly>
+              <button class="tracker-add-btn">+ Add task</button>
+            </div>
+            <!-- Task list -->
+            <div class="tracker-task-list">
+              <div class="tracker-task-item">
+                <div class="tracker-task-item-left">
+                  <div class="tracker-task-item-name">ai</div>
+                  <div class="tracker-task-project">
+                    <div class="tracker-project-dot"></div>
+                    <span class="tracker-project-name">BSW – BitSpinWin</span>
+                    <div class="tracker-project-badge">T</div>
+                  </div>
+                </div>
+                <div class="tracker-task-item-right">
+                  <div class="tracker-task-item-time running">02:53:35</div>
+                  <div class="tracker-task-play" style="color:#ef4444; font-size:14px;">⏸</div>
+                </div>
+              </div>
+              <div class="tracker-task-item">
+                <div class="tracker-task-item-left">
+                  <div class="tracker-task-item-name">Analytics &amp; Reporting</div>
+                  <div class="tracker-task-project">
+                    <div class="tracker-project-dot"></div>
+                    <span class="tracker-project-name">BSW – BitSpinWin</span>
+                    <div class="tracker-project-badge">T</div>
+                  </div>
+                </div>
+                <div class="tracker-task-item-right">
+                  <div class="tracker-task-item-time stopped">00:00:00</div>
+                </div>
+              </div>
+            </div>
+            <!-- Footer -->
+            <div class="tracker-footer">
+              <span class="tracker-footer-ver">v2.1.0.1</span>
+              <a class="tracker-footer-link" href="#">Open Dashboard ↗</a>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-footer"><span class="sf-label">Desktop Tracker App</span><span class="variant-tag">SVG</span></div>
+      </div>
+
+      <!-- Login Screen -->
+      <div class="showcase-item full-width">
+        <div class="showcase-body login-mock">
+          <img class="login-logo" src="orbit-ring-svg.svg" alt="talyvn">
+          <div class="login-title">Welcome back</div>
+          <div class="login-sub">Sign in to your talyvn workspace</div>
+          <input class="login-field" type="text" value="alex@company.com" readonly>
+          <input class="login-field" type="password" value="••••••••" readonly>
+          <button class="login-btn">Sign In</button>
+        </div>
+        <div class="showcase-footer"><span class="sf-label">Login Screen</span><span class="variant-tag">SVG</span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <p><span class="brand-mark">talyvn</span> &nbsp;·&nbsp; Orbit Ring · Logo Showcase &nbsp;·&nbsp; 2025</p>
+  </div>
+
+</div>
+
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    const label = document.getElementById('themeLabel');
+    if (html.getAttribute('data-theme') === 'dark') {
+      html.setAttribute('data-theme', 'light');
+      label.textContent = 'Light';
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      label.textContent = 'Dark';
+    }
+  }
+  function copyHex(el, hex) {
+    navigator.clipboard.writeText(hex).catch(() => {});
+    const toast = el.querySelector('.copied-toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1200);
+  }
+</script>
+</body>
+</html>
